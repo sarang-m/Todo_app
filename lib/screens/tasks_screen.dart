@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/core/constants.dart';
 import 'package:todoapp/core/screen_size.dart';
+import 'package:todoapp/model/task.dart';
 import 'package:todoapp/screens/add_task_screen.dart';
 import 'package:todoapp/widgets/task_list.dart';
 
@@ -12,8 +13,18 @@ class TasksScreen extends StatefulWidget {
 class _TasksScreenState extends State<TasksScreen> {
 
 
+  List<Task> tasks = [
+    Task(taskName: "first task"),
+    Task(taskName: "second task"),
+    Task(taskName: "3rd task"),
+    Task(taskName: "4th task"),
+  ];
+
+
   @override
   Widget build(BuildContext context) {
+
+    int takNumber = tasks.length;
     SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
@@ -21,7 +32,13 @@ class _TasksScreenState extends State<TasksScreen> {
           backgroundColor: Colors.lightBlueAccent,
           child: Icon(Icons.add),
           onPressed: (){
-            showModalBottomSheet(context: context, builder: (context) => AddTaskScreen());
+            showModalBottomSheet(context: context,
+                builder: (context) => AddTaskScreen(
+                  addTaskCallback: (newTaskTitle){
+                    setState(() {
+                      tasks.add(Task(taskName: newTaskTitle));
+                    });
+                  },));
           },
         ),
         body: Column(
@@ -49,7 +66,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     text: TextSpan(children: [
                       TextSpan(text: "TODO\n", style: KHeadingTextStyle),
                       TextSpan(
-                        text: "12 Tasks",
+                        text: "$takNumber tasks",
                         style: KHeadingTextStyle.copyWith(
                             fontSize: SizeConfig.safeBlockHorizontal * 4,
                             fontWeight: FontWeight.w600),
@@ -72,20 +89,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(20)),
                   color: Colors.white
                 ),
-                child: ListView(
-                  children: [
-
-                    TaskList(),
-                    TaskList(),
-                    TaskList(),
-                    TaskList(),
-                    TaskList(),
-                    TaskList(),
-                    TaskList(),
-                    TaskList(),
-                    TaskList()
-                  ],
-                ),
+                child: TaskListWidget(task: tasks,),
               ),
             )
           ],
@@ -94,5 +98,7 @@ class _TasksScreenState extends State<TasksScreen> {
     );
   }
 }
+
+
 
 

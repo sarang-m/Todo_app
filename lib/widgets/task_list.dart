@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/core/constants.dart';
-import 'package:todoapp/core/screen_size.dart';
+import 'package:todoapp/model/task.dart';
+import 'package:todoapp/widgets/task.dart';
 
-class TaskList extends StatefulWidget {
+class TaskListWidget extends StatefulWidget {
+
+  final List<Task> task;
+  TaskListWidget({this.task});
+
   @override
-  _TaskListState createState() => _TaskListState();
+  _TaskListWidgetState createState() => _TaskListWidgetState();
 }
 
-class _TaskListState extends State<TaskList> {
-  bool _isChecked = false;
+class _TaskListWidgetState extends State<TaskListWidget> {
+
 
   @override
   Widget build(BuildContext context) {
-    return CheckboxListTile(
-
-
-      title: Text("This is a task",style: KTaskTextStyle),
-      secondary: Text("1",style: KTaskTextStyle,),
-      value: _isChecked,
-      onChanged: (bool newValue){
-        setState(() {
-          _isChecked = newValue;
-        });
-      }
-    );
+    return ListView.builder(itemBuilder: (context, index){
+      return TaskWidget(
+        taskTitle: widget.task[index].taskName,
+        isChecked: widget.task[index].isDone,
+        serialNo: index+1,
+        checkBoxCallback:(bool checkBoxCondition){
+          setState(() {
+            widget.task[index].toggleDone();
+          });
+        });},
+    itemCount: widget.task.length,);
   }
 }

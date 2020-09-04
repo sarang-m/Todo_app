@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:todoapp/core/screen_size.dart';
 
 class AddTaskScreen extends StatelessWidget {
+
+  final Function addTaskCallback;
+
+  AddTaskScreen({this.addTaskCallback});
+
   @override
   Widget build(BuildContext context) {
+    String newTask;
     return Container(
       color: Color(0xFF757575),
       child: Container(
@@ -26,6 +32,9 @@ class AddTaskScreen extends StatelessWidget {
               ),
               TextField(
                 textAlign: TextAlign.center,
+                onChanged: (newValue){
+                  newTask = newValue;
+                },
                 autofocus: true,
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(borderSide: BorderSide(
@@ -40,7 +49,10 @@ class AddTaskScreen extends StatelessWidget {
                   child: FlatButton(
                     color: Colors.lightBlueAccent,
                     child: Text("Add",style: TextStyle(color: Colors.white),),
-                    onPressed: (){},
+                    onPressed: (){
+                      addTaskCallback(newTask);
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
               ),
