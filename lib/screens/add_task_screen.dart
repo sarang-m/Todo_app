@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoapp/core/screen_size.dart';
+import 'package:todoapp/model/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
 
@@ -50,7 +52,7 @@ class AddTaskScreen extends StatelessWidget {
                     color: Colors.lightBlueAccent,
                     child: Text("Add",style: TextStyle(color: Colors.white),),
                     onPressed: (){
-                      addTaskCallback(newTask);
+                      Provider.of<TaskData>(context,listen: false).addTask(newTask);
                       Navigator.pop(context);
                     },
                   ),

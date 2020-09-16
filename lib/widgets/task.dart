@@ -6,21 +6,25 @@ class TaskWidget extends StatelessWidget {
   final String taskTitle;
   final Function checkBoxCallback;
   final int serialNo;
+  final Function deleteCallback;
 
-  TaskWidget({this.taskTitle,this.isChecked,this.checkBoxCallback,this.serialNo});
+  TaskWidget({this.taskTitle,this.isChecked,this.checkBoxCallback,
+    this.serialNo,this.deleteCallback});
 
 
   @override
   Widget build(BuildContext context) {
-    return CheckboxListTile(
-
-      title: Text("$taskTitle",
-          style: isChecked? KTaskTextStyle.copyWith(
-              decoration: TextDecoration.lineThrough):KTaskTextStyle),
-      activeColor: Colors.lightBlueAccent,
-      secondary: Text("$serialNo",style: KTaskTextStyle,),
-      value: isChecked,
-      onChanged: checkBoxCallback
+    return InkWell(
+      onLongPress: deleteCallback,
+      child: CheckboxListTile(
+        title: Text("$taskTitle",
+            style: isChecked? KTaskTextStyle.copyWith(
+                decoration: TextDecoration.lineThrough):KTaskTextStyle),
+        activeColor: Colors.lightBlueAccent,
+        secondary: Text("$serialNo",style: KTaskTextStyle,),
+        value: isChecked,
+        onChanged: checkBoxCallback
+      ),
     );
   }
 }
