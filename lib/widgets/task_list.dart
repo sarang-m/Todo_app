@@ -14,7 +14,6 @@ class TaskListWidget extends StatelessWidget{
           return TaskWidget(
               taskTitle: taskData.tasks[index].taskName,
               isChecked: taskData.tasks[index].isDone,
-              serialNo : index+1,
               deleteCallback: (){
                 taskData.deleteTask(taskData.tasks[index]);
               },

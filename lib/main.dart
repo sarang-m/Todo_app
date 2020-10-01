@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           );
         },
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(scaffoldBackgroundColor: KBackgroundColor),
+        theme: ThemeData.dark(),
         home: TasksScreen(),
       ),
     );
